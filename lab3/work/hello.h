@@ -1,4 +1,6 @@
 #ifndef HELLO_H
 #define HELLO_H
-void helloprint();
+#include <stdio.h>
+void helloprint1();
+void helloprint2();
 #endif
