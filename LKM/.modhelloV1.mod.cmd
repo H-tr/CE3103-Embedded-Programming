@@ -1,0 +1,1 @@
+cmd_/home/run/Data/CE3103-Embedded-Programming/LKM/modhelloV1.mod := { echo  /home/run/Data/CE3103-Embedded-Programming/LKM/modhelloV1.o;  echo; } > /home/run/Data/CE3103-Embedded-Programming/LKM/modhelloV1.mod

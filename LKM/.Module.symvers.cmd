@@ -1,0 +1,1 @@
+cmd_/home/run/Data/CE3103-Embedded-Programming/LKM/Module.symvers := sed 's/\.ko$$/\.o/' /home/run/Data/CE3103-Embedded-Programming/LKM/modules.order | scripts/mod/modpost -m -a  -o /home/run/Data/CE3103-Embedded-Programming/LKM/Module.symvers -e -i Module.symvers   -T -
