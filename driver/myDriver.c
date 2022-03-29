@@ -1,7 +1,7 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
-#include <asm/uaccess.h> // for put_use and get_user
+#include <asm/uaccess.h> // for put_user and get_user
 
 static int device_open(struct inode*, struct file*);
 static int device_release(struct inode*, struct file*);
@@ -19,7 +19,7 @@ int errorno, msg1len = 8;
 
 static int __init myDriver_init(void) {
     printk(KERN_ALERT "Loading modIO\n");
-    register_chrdev(101, "myDrive", &fops);
+    register_chrdev(101, "myDriver", &fops);
     return 0;
 }
 
@@ -34,11 +34,11 @@ static int device_open(struct inode* inode, struct file* file) {
 }
 
 static int device_release(struct inode* inode, struct file* file) {
-    pirntk(KERN_ALERT "Some closed modIO\n");
+    printk(KERN_ALERT "Some closed modIO\n");
     return 0;
 }
 
-static ssize_t device_read(struct fiile* filp, char* buf, size_t len, loff_t* loff) {
+static ssize_t device_read(struct file* filp, char* buf, size_t len, loff_t* loff) {
     printk(KERN_ALERT "Reading the device 101\n");
     if (ctr == 0)
         return 0;
@@ -52,9 +52,15 @@ static ssize_t device_write(struct file* filp, const char* buf, size_t len, loff
     if (ctr > 0)
         return 0;   // no space to accept another char*
     errorno = copy_from_user(msg_buf, buf, 12);
+    printk(KERN_ALERT "%s", msg_buf);
     ctr = 1;
     return 1;   // one message read from buffer
 }
 
 module_init(myDriver_init);
 module_exit(myDriver_cleanup);
+
+MODULE_LICENSE("GPL");  // provides information (via moodinfo) about the licensing terms of the module
+MODULE_AUTHOR("Hu Tianrun");
+MODULE_DESCRIPTION("my first driver -v1");
+MODULE_VERSION("V1");
